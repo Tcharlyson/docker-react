@@ -7,3 +7,16 @@ before_install:
 
 script:
   - docker run tcharlyson/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2" # La région choisie dans AWS
+  app: "docker-react" # Le nom donné à l'application dans AWS
+  env: "DockerReact-env" #DockerReact-env.enekam2whg.us-east-2.elasticbeanstalk.com
+  bucket_name: "elasticbeanstalk-us-east-2-533451440183" # zip file qui sera uploadé sur AWS par Travis
+  bucket_path: "docker-react" # Même nom que l'app
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
